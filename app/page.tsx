@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+
 const CHANNEL_HANDLE = "adygkhase";
 const CHANNEL_URL = `https://t.me/${CHANNEL_HANDLE}`;
 const CHANNEL_FEED_URL = `https://t.me/s/${CHANNEL_HANDLE}`;
@@ -6,6 +9,181 @@ const VK_WIDGET_URL = "https://vk.com/widget_community.php?gid=214046715&mode=3&
 const MAX_URL = "https://max.ru/institute_of_history";
 
 export const dynamic = "force-dynamic";
+
+type Locale = "ru" | "tr";
+
+const copy = {
+  ru: {
+    skip: "Перейти к содержанию",
+    homeLabel: "Адыгэ Хасэ — на главную",
+    nav: ["Об организации", "Направления", "Публикации", "Соцсети", "Контакты"],
+    menu: "Меню",
+    region: "Краснодарский край",
+    heroTitle: "Культура, которая",
+    heroAccent: "объединяет поколения",
+    heroLead: "Региональный культурно-просветительский центр: сохраняем наследие, поддерживаем молодёжь и создаём пространство для диалога.",
+    latestNews: "Последние новости",
+    learnMore: "Узнать о Хасэ",
+    factsLabel: "Кратко об организации",
+    telegramSubscribers: "подписчиков в Telegram",
+    centers: "центра в крае",
+    generations: "живая связь поколений",
+    fromTelegram: "из Telegram",
+    latestPost: "Последняя публикация",
+    views: "просмотров",
+    newsFallback: "Новости Адыгэ Хасэ",
+    readTelegram: "Читать в Telegram",
+    aboutEyebrow: "Об организации",
+    aboutTitle: "Дом культуры, знаний и общего дела",
+    aboutIntro: "«Адыгэ Хасэ» объединяет людей, которым важно сохранять адыгский язык, историю и традиции — и передавать их дальше в живом, современном формате.",
+    organizationDescription: "Общественная организация — региональный культурно-просветительский центр Краснодарского края «Адыгэ Хасэ (Адыгский (Черкесский) Совет)».",
+    sourceLive: "Информация обновлена из официального Telegram-канала",
+    sourcePaused: "Показана сохранённая информация; Telegram временно недоступен",
+    workEyebrow: "Направления работы",
+    workTitle: "Сохранять. Просвещать. Объединять.",
+    workLead: "От встреч с носителями традиций до современных образовательных проектов — работа Хасэ охватывает весь край.",
+    directions: [
+      ["Культура и язык", "Вечера фольклора, история, родной язык, танец и проекты по сохранению нематериального наследия."],
+      ["Молодёжные проекты", "Дискуссионные клубы, образовательные встречи, волонтёрство и поддержка инициатив нового поколения."],
+      ["Общественный диалог", "Партнёрство с культурными центрами, общественными объединениями и соседними регионами."],
+      ["События и просвещение", "Выставки, лекции, творческие встречи, семейные программы и открытые мероприятия в Армавире и Краснодаре."],
+    ],
+    publications: "Публикации",
+    newsTitle: "Сейчас в Хасэ",
+    allTelegram: "Все публикации в Telegram",
+    read: "Читать",
+    readPost: "Читать публикацию",
+    feedStatus: "Лента загружается напрямую из публичного канала и обновляется при каждом посещении сайта.",
+    mediaEyebrow: "Медиа Адыгэ Хасэ",
+    socialTitle: "Ищите нас в различных социальных сетях",
+    socialLead: "Общее число подписчиков медиа «Адыгэ Хасэ» Краснодарского края — свыше 50 000 человек, а ежемесячный охват превышает один миллион. Следите за новостями, проектами и встречами там, где вам удобно.",
+    audienceLabel: "Аудитория медиа Адыгэ Хасэ",
+    mediaSubscribers: "подписчиков медиасети",
+    reachValue: "1 млн+",
+    monthlyReach: "охватов ежемесячно",
+    subscriber: "подписчиков",
+    vk: "ВКонтакте",
+    organizationChannel: "Канал организации",
+    openChannel: "Открыть канал",
+    contactEyebrow: "Будем на связи",
+    contactTitle: "Приходите в Хасэ",
+    contactLead: "Узнавайте о встречах и новых проектах в Telegram. Двери наших центров открыты для тех, кому близки культура, просвещение и общее дело.",
+    subscribe: "Подписаться на канал",
+    armavir: "Армавир",
+    armavirAddress: "ул. Софьи Перовской, 28",
+    krasnodar: "Краснодар",
+    krasnodarAddress: "ул. Бабушкина, 146",
+    office: "2 этаж, офис 212",
+    map: "Открыть на карте",
+    footerDescription: "Региональный культурно-просветительский центр Краснодарского края",
+    top: "Наверх",
+    copyright: "«Адыгэ Хасэ» Краснодарского края",
+    footerSource: "Информация и публикации: официальный Telegram-канал",
+  },
+  tr: {
+    skip: "İçeriğe geç",
+    homeLabel: "Adıge Hase — ana sayfa",
+    nav: ["Kurum hakkında", "Çalışma alanları", "Yayınlar", "Sosyal medya", "İletişim"],
+    menu: "Menü",
+    region: "Krasnodar Bölgesi",
+    heroTitle: "Kuşakları birleştiren",
+    heroAccent: "yaşayan kültür",
+    heroLead: "Bölgesel kültür ve eğitim merkezi: mirasımızı koruyor, gençleri destekliyor ve diyalog için alan yaratıyoruz.",
+    latestNews: "Son haberler",
+    learnMore: "Hase hakkında",
+    factsLabel: "Kurum hakkında kısa bilgi",
+    telegramSubscribers: "Telegram abonesi",
+    centers: "bölgesel merkez",
+    generations: "kuşaklar arasında canlı bağ",
+    fromTelegram: "Telegram'dan · Rusça",
+    latestPost: "Son yayın",
+    views: "görüntülenme",
+    newsFallback: "Adıge Hase haberleri",
+    readTelegram: "Telegram'da oku",
+    aboutEyebrow: "Kurum hakkında",
+    aboutTitle: "Kültürün, bilginin ve ortak emeğin evi",
+    aboutIntro: "Adıge Hase; Adıge dilini, tarihini ve geleneklerini yaşatmak ve onları çağdaş, canlı bir biçimde gelecek kuşaklara aktarmak isteyen insanları bir araya getirir.",
+    organizationDescription: "Adıge Hase (Adıge/Çerkes Konseyi), Krasnodar Bölgesi'nde faaliyet gösteren bölgesel bir kültür ve eğitim merkezi ile sivil toplum kuruluşudur.",
+    sourceLive: "Bilgiler resmî Telegram kanalından güncellendi",
+    sourcePaused: "Kayıtlı bilgiler gösteriliyor; Telegram'a geçici olarak ulaşılamıyor",
+    workEyebrow: "Çalışma alanları",
+    workTitle: "Korumak. Öğretmek. Birleştirmek.",
+    workLead: "Gelenek taşıyıcılarıyla buluşmalardan çağdaş eğitim projelerine kadar Hase'nin çalışmaları tüm bölgeyi kapsar.",
+    directions: [
+      ["Kültür ve dil", "Folklor geceleri, tarih, ana dil, dans ve somut olmayan kültürel mirası koruma projeleri."],
+      ["Gençlik projeleri", "Tartışma kulüpleri, eğitim buluşmaları, gönüllülük ve yeni kuşağın girişimlerine destek."],
+      ["Toplumsal diyalog", "Kültür merkezleri, sivil toplum kuruluşları ve komşu bölgelerle iş birliği."],
+      ["Etkinlikler ve eğitim", "Armavir ve Krasnodar'da sergiler, konferanslar, yaratıcı buluşmalar, aile programları ve halka açık etkinlikler."],
+    ],
+    publications: "Yayınlar",
+    newsTitle: "Hase'de bugün",
+    allTelegram: "Telegram'daki tüm yayınlar",
+    read: "Oku",
+    readPost: "Yayını oku",
+    feedStatus: "Yayınlar resmî Telegram kanalından Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
+    mediaEyebrow: "Adıge Hase Medyası",
+    socialTitle: "Bizi farklı sosyal ağlarda bulun",
+    socialLead: "Krasnodar Bölgesi Adıge Hase medya ağının toplam abone sayısı 50.000'i, aylık erişimi ise bir milyonu aşmaktadır. Haberleri, projeleri ve buluşmaları size en uygun platformdan takip edin.",
+    audienceLabel: "Adıge Hase medya kitlesi",
+    mediaSubscribers: "medya ağı abonesi",
+    reachValue: "1 milyon+",
+    monthlyReach: "aylık erişim",
+    subscriber: "abone",
+    vk: "VKontakte",
+    organizationChannel: "Kurumun kanalı",
+    openChannel: "Kanalı aç",
+    contactEyebrow: "İletişimde kalalım",
+    contactTitle: "Hase'ye bekliyoruz",
+    contactLead: "Buluşmalar ve yeni projeler için Telegram kanalımızı takip edin. Kültüre, eğitime ve ortak çalışmaya değer veren herkese merkezlerimizin kapıları açıktır.",
+    subscribe: "Kanala abone ol",
+    armavir: "Armavir",
+    armavirAddress: "Sofya Perovskaya Cd. 28",
+    krasnodar: "Krasnodar",
+    krasnodarAddress: "Babuşkina Cd. 146",
+    office: "2. kat, ofis 212",
+    map: "Haritada aç",
+    footerDescription: "Krasnodar Bölgesi bölgesel kültür ve eğitim merkezi",
+    top: "Yukarı",
+    copyright: "Krasnodar Bölgesi Adıge Hase",
+    footerSource: "Bilgi ve yayın kaynağı: resmî Telegram kanalı",
+  },
+} as const;
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const locale: Locale = params.lang === "tr" ? "tr" : "ru";
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
+  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  const origin = `${protocol}://${host}`;
+  const title = locale === "tr" ? "Krasnodar Bölgesi Adıge Hase" : "Адыгэ Хасэ Краснодарского края";
+  const description = locale === "tr"
+    ? "Krasnodar Bölgesi Adıge Hase kültür ve eğitim merkezinin haberleri, projeleri, etkinlikleri ve iletişim bilgileri."
+    : "Региональный культурно-просветительский центр: новости, проекты, события и контакты Адыгэ Хасэ Краснодарского края.";
+  const url = locale === "tr" ? `${origin}/?lang=tr` : origin;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: { ru: origin, tr: `${origin}/?lang=tr` },
+    },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      locale: locale === "tr" ? "tr_TR" : "ru_RU",
+      url,
+      images: [{ url: `${origin}/og.png`, width: 1717, height: 916, alt: title }],
+    },
+    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og.png`] },
+  };
+}
 
 type TelegramPost = {
   id: string;
@@ -167,7 +345,7 @@ async function getTelegramFeed(): Promise<TelegramFeed> {
   }
 }
 
-async function getVkSubscribers() {
+async function getVkSubscribers(locale: Locale) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
 
@@ -182,16 +360,16 @@ async function getVkSubscribers() {
     const rawCount = html.match(/id="members_count">\s*([\d,.\s]+)/i)?.[1] ?? "";
     const digits = rawCount.replace(/\D/g, "");
     if (!digits) throw new Error("VK subscriber count is unavailable");
-    return new Intl.NumberFormat("ru-RU").format(Number(digits));
+    return new Intl.NumberFormat(locale === "tr" ? "tr-TR" : "ru-RU").format(Number(digits));
   } catch {
-    return "3,8 тыс.+";
+    return locale === "tr" ? "3,8 bin+" : "3,8 тыс.+";
   } finally {
     clearTimeout(timeout);
   }
 }
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("ru-RU", {
+function formatDate(value: string, locale: Locale) {
+  return new Intl.DateTimeFormat(locale === "tr" ? "tr-TR" : "ru-RU", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -199,46 +377,64 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
-function Logo({ compact = false }: { compact?: boolean }) {
+function Logo({ compact = false, locale = "ru" }: { compact?: boolean; locale?: Locale }) {
   return (
     <span className={compact ? "logo-lockup logo-lockup--compact" : "logo-lockup"}>
-      <img src="/adyge-khase-logo.png" alt="Адыгэ Хасэ Краснодарского края" />
+      <img
+        src="/adyge-khase-logo.png"
+        alt={locale === "tr" ? "Krasnodar Bölgesi Adıge Hase" : "Адыгэ Хасэ Краснодарского края"}
+      />
     </span>
   );
 }
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}) {
+  const params = await searchParams;
+  const locale: Locale = params.lang === "tr" ? "tr" : "ru";
+  const t = copy[locale];
   const [feed, vkSubscribers] = await Promise.all([
     getTelegramFeed(),
-    getVkSubscribers(),
+    getVkSubscribers(locale),
   ]);
+  const telegramSubscribers =
+    locale === "tr" ? feed.subscribers.replace(/тыс\.?/gi, "bin") : feed.subscribers;
   const [featured, ...recentPosts] = feed.posts;
 
   return (
-    <main>
-      <a className="skip-link" href="#content">Перейти к содержанию</a>
+    <main lang={locale}>
+      <a className="skip-link" href="#content">{t.skip}</a>
 
       <header className="site-header">
         <div className="shell header-inner">
-          <a className="brand" href="#top" aria-label="Адыгэ Хасэ — на главную"><Logo /></a>
-          <nav className="desktop-nav" aria-label="Основная навигация">
-            <a href="#about">Об организации</a>
-            <a href="#work">Направления</a>
-            <a href="#news">Публикации</a>
-            <a href="#social">Соцсети</a>
-            <a href="#contacts">Контакты</a>
+          <a className="brand" href="#top" aria-label={t.homeLabel}><Logo locale={locale} /></a>
+          <nav className="desktop-nav" aria-label={locale === "tr" ? "Ana navigasyon" : "Основная навигация"}>
+            <a href="#about">{t.nav[0]}</a>
+            <a href="#work">{t.nav[1]}</a>
+            <a href="#news">{t.nav[2]}</a>
+            <a href="#social">{t.nav[3]}</a>
+            <a href="#contacts">{t.nav[4]}</a>
           </nav>
-          <a className="header-cta" href={CHANNEL_URL} target="_blank" rel="noreferrer">
-            Telegram <span aria-hidden="true">↗</span>
-          </a>
+          <div className="header-actions">
+            <div className="language-switch" aria-label="Language / Язык">
+              <a className={locale === "ru" ? "is-active" : ""} href="/#top" lang="ru">RU</a>
+              <a className={locale === "tr" ? "is-active" : ""} href="/?lang=tr#top" lang="tr">TR</a>
+            </div>
+            <a className="header-cta" href={CHANNEL_URL} target="_blank" rel="noreferrer">
+              Telegram <span aria-hidden="true">↗</span>
+            </a>
+          </div>
           <details className="mobile-menu">
-            <summary aria-label="Открыть меню">Меню</summary>
-            <nav aria-label="Мобильная навигация">
-              <a href="#about">Об организации</a>
-              <a href="#work">Направления</a>
-              <a href="#news">Публикации</a>
-              <a href="#social">Соцсети</a>
-              <a href="#contacts">Контакты</a>
+            <summary aria-label={t.menu}>{t.menu}</summary>
+            <nav aria-label={locale === "tr" ? "Mobil navigasyon" : "Мобильная навигация"}>
+              <a href="#about">{t.nav[0]}</a>
+              <a href="#work">{t.nav[1]}</a>
+              <a href="#news">{t.nav[2]}</a>
+              <a href="#social">{t.nav[3]}</a>
+              <a href="#contacts">{t.nav[4]}</a>
             </nav>
           </details>
         </div>
@@ -248,20 +444,17 @@ export default async function Home() {
         <div className="hero-pattern" aria-hidden="true" />
         <div className="shell hero-grid" id="content">
           <div className="hero-copy">
-            <p className="eyebrow">Краснодарский край</p>
-            <h1>Культура, которая<span>объединяет поколения</span></h1>
-            <p className="hero-lead">
-              Региональный культурно-просветительский центр: сохраняем наследие,
-              поддерживаем молодёжь и создаём пространство для диалога.
-            </p>
+            <p className="eyebrow">{t.region}</p>
+            <h1>{t.heroTitle}<span>{t.heroAccent}</span></h1>
+            <p className="hero-lead">{t.heroLead}</p>
             <div className="hero-actions">
-              <a className="button button--light" href="#news">Последние новости</a>
-              <a className="text-link text-link--light" href="#about">Узнать о Хасэ <span aria-hidden="true">↓</span></a>
+              <a className="button button--light" href="#news">{t.latestNews}</a>
+              <a className="text-link text-link--light" href="#about">{t.learnMore} <span aria-hidden="true">↓</span></a>
             </div>
-            <div className="hero-facts" aria-label="Кратко об организации">
-              <div><strong>{feed.subscribers}</strong><span>подписчиков в Telegram</span></div>
-              <div><strong>2</strong><span>центра в крае</span></div>
-              <div><strong>∞</strong><span>живая связь поколений</span></div>
+            <div className="hero-facts" aria-label={t.factsLabel}>
+              <div><strong>{telegramSubscribers}</strong><span>{t.telegramSubscribers}</span></div>
+              <div><strong>2</strong><span>{t.centers}</span></div>
+              <div><strong>∞</strong><span>{t.generations}</span></div>
             </div>
           </div>
 
@@ -270,18 +463,21 @@ export default async function Home() {
               {featured?.image ? (
                 <img src={featured.image} alt="" referrerPolicy="no-referrer" />
               ) : (
-                <div className="featured-placeholder" aria-hidden="true"><span>Адыгэ</span><strong>Хасэ</strong></div>
+                <div className="featured-placeholder" aria-hidden="true">
+                  <span>{locale === "tr" ? "Adıge" : "Адыгэ"}</span>
+                  <strong>{locale === "tr" ? "Hase" : "Хасэ"}</strong>
+                </div>
               )}
-              <span className="live-badge"><i aria-hidden="true" /> из Telegram</span>
+              <span className="live-badge"><i aria-hidden="true" /> {t.fromTelegram}</span>
             </div>
             <div className="featured-body">
               <p className="post-meta">
-                {featured ? formatDate(featured.date) : "Последняя публикация"}
-                {featured?.views ? <span>{featured.views} просмотров</span> : null}
+                {featured ? formatDate(featured.date, locale) : t.latestPost}
+                {featured?.views ? <span>{featured.views} {t.views}</span> : null}
               </p>
-              <h2>{featured?.title ?? "Новости Адыгэ Хасэ"}</h2>
+              <h2>{featured?.title ?? t.newsFallback}</h2>
               <p>{featured?.excerpt}</p>
-              <a href={featured?.url ?? CHANNEL_URL} target="_blank" rel="noreferrer">Читать в Telegram <span aria-hidden="true">↗</span></a>
+              <a href={featured?.url ?? CHANNEL_URL} target="_blank" rel="noreferrer">{t.readTelegram} <span aria-hidden="true">↗</span></a>
             </div>
           </article>
         </div>
@@ -290,20 +486,15 @@ export default async function Home() {
       <section className="about-section" id="about">
         <div className="shell about-grid">
           <div className="section-heading">
-            <p className="eyebrow eyebrow--dark">Об организации</p>
-            <h2>Дом культуры, знаний и общего дела</h2>
+            <p className="eyebrow eyebrow--dark">{t.aboutEyebrow}</p>
+            <h2>{t.aboutTitle}</h2>
           </div>
           <div className="about-copy">
-            <p className="about-intro">
-              «Адыгэ Хасэ» объединяет людей, которым важно сохранять адыгский язык,
-              историю и традиции — и передавать их дальше в живом, современном формате.
-            </p>
-            <p>{feed.description}</p>
+            <p className="about-intro">{t.aboutIntro}</p>
+            <p>{locale === "tr" ? t.organizationDescription : feed.description}</p>
             <div className="source-note">
               <span className={feed.isLive ? "source-dot" : "source-dot source-dot--paused"} />
-              {feed.isLive
-                ? "Информация обновлена из официального Telegram-канала"
-                : "Показана сохранённая информация; Telegram временно недоступен"}
+              {feed.isLive ? t.sourceLive : t.sourcePaused}
             </div>
           </div>
         </div>
@@ -313,35 +504,32 @@ export default async function Home() {
         <div className="shell">
           <div className="section-topline">
             <div>
-              <p className="eyebrow eyebrow--dark">Направления работы</p>
-              <h2>Сохранять. Просвещать. Объединять.</h2>
+              <p className="eyebrow eyebrow--dark">{t.workEyebrow}</p>
+              <h2>{t.workTitle}</h2>
             </div>
-            <p>
-              От встреч с носителями традиций до современных образовательных проектов —
-              работа Хасэ охватывает весь край.
-            </p>
+            <p>{t.workLead}</p>
           </div>
 
           <div className="direction-grid">
             <article className="direction-card direction-card--primary">
               <span className="direction-number">01</span><div className="direction-symbol" aria-hidden="true">Ӏ</div>
-              <h3>Культура и язык</h3>
-              <p>Вечера фольклора, история, родной язык, танец и проекты по сохранению нематериального наследия.</p>
+              <h3>{t.directions[0][0]}</h3>
+              <p>{t.directions[0][1]}</p>
             </article>
             <article className="direction-card">
               <span className="direction-number">02</span><div className="direction-symbol" aria-hidden="true">◎</div>
-              <h3>Молодёжные проекты</h3>
-              <p>Дискуссионные клубы, образовательные встречи, волонтёрство и поддержка инициатив нового поколения.</p>
+              <h3>{t.directions[1][0]}</h3>
+              <p>{t.directions[1][1]}</p>
             </article>
             <article className="direction-card">
               <span className="direction-number">03</span><div className="direction-symbol" aria-hidden="true">◇</div>
-              <h3>Общественный диалог</h3>
-              <p>Партнёрство с культурными центрами, общественными объединениями и соседними регионами.</p>
+              <h3>{t.directions[2][0]}</h3>
+              <p>{t.directions[2][1]}</p>
             </article>
             <article className="direction-card">
               <span className="direction-number">04</span><div className="direction-symbol" aria-hidden="true">✦</div>
-              <h3>События и просвещение</h3>
-              <p>Выставки, лекции, творческие встречи, семейные программы и открытые мероприятия в Армавире и Краснодаре.</p>
+              <h3>{t.directions[3][0]}</h3>
+              <p>{t.directions[3][1]}</p>
             </article>
           </div>
         </div>
@@ -350,8 +538,8 @@ export default async function Home() {
       <section className="news-section" id="news">
         <div className="shell">
           <div className="section-topline section-topline--news">
-            <div><p className="eyebrow eyebrow--dark">Публикации</p><h2>Сейчас в Хасэ</h2></div>
-            <a className="text-link" href={CHANNEL_URL} target="_blank" rel="noreferrer">Все публикации в Telegram <span aria-hidden="true">↗</span></a>
+            <div><p className="eyebrow eyebrow--dark">{t.publications}</p><h2>{t.newsTitle}</h2></div>
+            <a className="text-link" href={CHANNEL_URL} target="_blank" rel="noreferrer">{t.allTelegram} <span aria-hidden="true">↗</span></a>
           </div>
 
           <div className="news-grid">
@@ -361,42 +549,38 @@ export default async function Home() {
                   {post.image ? (
                     <img src={post.image} alt="" loading="lazy" referrerPolicy="no-referrer" />
                   ) : (
-                    <span className="news-placeholder" aria-hidden="true"><b>АХ</b><i>{String(index + 1).padStart(2, "0")}</i></span>
+                    <span className="news-placeholder" aria-hidden="true"><b>{locale === "tr" ? "AH" : "АХ"}</b><i>{String(index + 1).padStart(2, "0")}</i></span>
                   )}
                 </a>
                 <div className="news-body">
-                  <p className="post-meta">{formatDate(post.date)}{post.views ? <span>{post.views} просмотров</span> : null}</p>
+                  <p className="post-meta">{formatDate(post.date, locale)}{post.views ? <span>{post.views} {t.views}</span> : null}</p>
                   <h3><a href={post.url} target="_blank" rel="noreferrer">{post.title}</a></h3>
                   <p>{post.excerpt}</p>
-                  <a className="card-link" href={post.url} target="_blank" rel="noreferrer" aria-label={`Читать публикацию: ${post.title}`}>
-                    Читать <span aria-hidden="true">↗</span>
+                  <a className="card-link" href={post.url} target="_blank" rel="noreferrer" aria-label={`${t.readPost}: ${post.title}`}>
+                    {t.read} <span aria-hidden="true">↗</span>
                   </a>
                 </div>
               </article>
             ))}
           </div>
-          <p className="feed-status"><span aria-hidden="true">↻</span> Лента загружается напрямую из публичного канала и обновляется при каждом посещении сайта.</p>
+          <p className="feed-status"><span aria-hidden="true">↻</span> {t.feedStatus}</p>
         </div>
       </section>
 
       <section className="social-section" id="social">
         <div className="shell social-grid">
           <div className="social-copy">
-            <p className="eyebrow">Медиа Адыгэ Хасэ</p>
-            <h2>Ищите нас в различных социальных сетях</h2>
-            <p>
-              Общее число подписчиков медиа «Адыгэ Хасэ» Краснодарского края — свыше
-              50 000 человек, а ежемесячный охват превышает один миллион. Следите за
-              новостями, проектами и встречами там, где вам удобно.
-            </p>
-            <div className="media-metrics" aria-label="Аудитория медиа Адыгэ Хасэ">
+            <p className="eyebrow">{t.mediaEyebrow}</p>
+            <h2>{t.socialTitle}</h2>
+            <p>{t.socialLead}</p>
+            <div className="media-metrics" aria-label={t.audienceLabel}>
               <div>
                 <strong>50 000+</strong>
-                <span>подписчиков медиасети</span>
+                <span>{t.mediaSubscribers}</span>
               </div>
               <div>
-                <strong>1 млн+</strong>
-                <span>охватов ежемесячно</span>
+                <strong>{t.reachValue}</strong>
+                <span>{t.monthlyReach}</span>
               </div>
             </div>
           </div>
@@ -405,19 +589,19 @@ export default async function Home() {
             <a href={CHANNEL_URL} target="_blank" rel="noreferrer">
               <span className="social-mark social-mark--telegram" aria-hidden="true">T</span>
               <span className="social-name"><b>Telegram</b><small>@adygkhase</small></span>
-              <strong>{feed.subscribers}<small> подписчиков</small></strong>
+              <strong>{telegramSubscribers}<small> {t.subscriber}</small></strong>
               <i aria-hidden="true">↗</i>
             </a>
             <a href={VK_URL} target="_blank" rel="noreferrer">
               <span className="social-mark social-mark--vk" aria-hidden="true">VK</span>
-              <span className="social-name"><b>ВКонтакте</b><small>vk.ru/adygkhase</small></span>
-              <strong>{vkSubscribers}<small> подписчиков</small></strong>
+              <span className="social-name"><b>{t.vk}</b><small>vk.ru/adygkhase</small></span>
+              <strong>{vkSubscribers}<small> {t.subscriber}</small></strong>
               <i aria-hidden="true">↗</i>
             </a>
             <a href={MAX_URL} target="_blank" rel="noreferrer">
               <span className="social-mark social-mark--max" aria-hidden="true">M</span>
-              <span className="social-name"><b>MAX</b><small>Канал организации</small></span>
-              <span className="social-follow">Открыть канал</span>
+              <span className="social-name"><b>MAX</b><small>{t.organizationChannel}</small></span>
+              <span className="social-follow">{t.openChannel}</span>
               <i aria-hidden="true">↗</i>
             </a>
           </div>
@@ -427,25 +611,22 @@ export default async function Home() {
       <section className="contacts-section" id="contacts">
         <div className="shell contacts-grid">
           <div className="contacts-copy">
-            <p className="eyebrow">Будем на связи</p>
-            <h2>Приходите в Хасэ</h2>
-            <p>
-              Узнавайте о встречах и новых проектах в Telegram. Двери наших центров
-              открыты для тех, кому близки культура, просвещение и общее дело.
-            </p>
-            <a className="button button--gold" href={CHANNEL_URL} target="_blank" rel="noreferrer">Подписаться на канал <span aria-hidden="true">↗</span></a>
+            <p className="eyebrow">{t.contactEyebrow}</p>
+            <h2>{t.contactTitle}</h2>
+            <p>{t.contactLead}</p>
+            <a className="button button--gold" href={CHANNEL_URL} target="_blank" rel="noreferrer">{t.subscribe} <span aria-hidden="true">↗</span></a>
           </div>
           <div className="address-list">
             <article>
               <span>01</span>
-              <div><p>Армавир</p><h3>ул. Софьи Перовской, 28</h3>
-                <a href="https://yandex.ru/maps/?text=Армавир%2C%20улица%20Софьи%20Перовской%2C%2028" target="_blank" rel="noreferrer">Открыть на карте ↗</a>
+              <div><p>{t.armavir}</p><h3>{t.armavirAddress}</h3>
+                <a href="https://yandex.ru/maps/?text=Армавир%2C%20улица%20Софьи%20Перовской%2C%2028" target="_blank" rel="noreferrer">{t.map} ↗</a>
               </div>
             </article>
             <article>
               <span>02</span>
-              <div><p>Краснодар</p><h3>ул. Бабушкина, 146</h3><small>2 этаж, офис 212</small>
-                <a href="https://yandex.ru/maps/?text=Краснодар%2C%20улица%20Бабушкина%2C%20146" target="_blank" rel="noreferrer">Открыть на карте ↗</a>
+              <div><p>{t.krasnodar}</p><h3>{t.krasnodarAddress}</h3><small>{t.office}</small>
+                <a href="https://yandex.ru/maps/?text=Краснодар%2C%20улица%20Бабушкина%2C%20146" target="_blank" rel="noreferrer">{t.map} ↗</a>
               </div>
             </article>
           </div>
@@ -454,18 +635,18 @@ export default async function Home() {
 
       <footer className="site-footer">
         <div className="shell footer-top">
-          <Logo compact />
-          <p>Региональный культурно-просветительский центр Краснодарского края</p>
+          <Logo compact locale={locale} />
+          <p>{t.footerDescription}</p>
           <div className="footer-links">
             <a href={CHANNEL_URL} target="_blank" rel="noreferrer">Telegram</a>
-            <a href={VK_URL} target="_blank" rel="noreferrer">ВКонтакте</a>
+            <a href={VK_URL} target="_blank" rel="noreferrer">{t.vk}</a>
             <a href={MAX_URL} target="_blank" rel="noreferrer">MAX</a>
-            <a href="#top">Наверх ↑</a>
+            <a href="#top">{t.top} ↑</a>
           </div>
         </div>
         <div className="shell footer-bottom">
-          <span>© {new Date().getFullYear()} «Адыгэ Хасэ» Краснодарского края</span>
-          <span>Информация и публикации: официальный Telegram-канал</span>
+          <span>© {new Date().getFullYear()} {t.copyright}</span>
+          <span>{t.footerSource}</span>
         </div>
       </footer>
     </main>
