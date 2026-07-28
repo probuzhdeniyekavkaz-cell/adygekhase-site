@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -37,3 +37,15 @@ jobs:
       - name: Опубликовать
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Поддержать плановые обновления
+        if: github.event_name == 'schedule'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          date -u +"Последнее плановое обновление: %Y-%m" > .github/last-refresh
+          if [ -z "$(git status --short -- .github/last-refresh)" ]; then
+            exit 0
+          fi
+          git add .github/last-refresh
+          git commit -m "chore: keep scheduled updates active [skip ci]"
+          git push
