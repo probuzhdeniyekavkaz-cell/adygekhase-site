@@ -1,6 +1,9 @@
 const CHANNEL_HANDLE = "adygkhase";
 const CHANNEL_URL = `https://t.me/${CHANNEL_HANDLE}`;
 const CHANNEL_FEED_URL = `https://t.me/s/${CHANNEL_HANDLE}`;
+const VK_URL = "https://vk.ru/adygkhase";
+const VK_WIDGET_URL = "https://vk.com/widget_community.php?gid=214046715&mode=3&width=320";
+const MAX_URL = "https://max.ru/institute_of_history";
 
 export const dynamic = "force-dynamic";
 
@@ -164,6 +167,29 @@ async function getTelegramFeed(): Promise<TelegramFeed> {
   }
 }
 
+async function getVkSubscribers() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await fetch(VK_WIDGET_URL, {
+      cache: "no-store",
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; AdygeKhaseSite/1.0)" },
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error("VK widget is unavailable");
+    const html = await response.text();
+    const rawCount = html.match(/id="members_count">\s*([\d,.\s]+)/i)?.[1] ?? "";
+    const digits = rawCount.replace(/\D/g, "");
+    if (!digits) throw new Error("VK subscriber count is unavailable");
+    return new Intl.NumberFormat("ru-RU").format(Number(digits));
+  } catch {
+    return "3,8 тыс.+";
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("ru-RU", {
     day: "numeric",
@@ -182,7 +208,10 @@ function Logo({ compact = false }: { compact?: boolean }) {
 }
 
 export default async function Home() {
-  const feed = await getTelegramFeed();
+  const [feed, vkSubscribers] = await Promise.all([
+    getTelegramFeed(),
+    getVkSubscribers(),
+  ]);
   const [featured, ...recentPosts] = feed.posts;
 
   return (
@@ -196,6 +225,7 @@ export default async function Home() {
             <a href="#about">Об организации</a>
             <a href="#work">Направления</a>
             <a href="#news">Публикации</a>
+            <a href="#social">Соцсети</a>
             <a href="#contacts">Контакты</a>
           </nav>
           <a className="header-cta" href={CHANNEL_URL} target="_blank" rel="noreferrer">
@@ -207,6 +237,7 @@ export default async function Home() {
               <a href="#about">Об организации</a>
               <a href="#work">Направления</a>
               <a href="#news">Публикации</a>
+              <a href="#social">Соцсети</a>
               <a href="#contacts">Контакты</a>
             </nav>
           </details>
@@ -348,6 +379,51 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="social-section" id="social">
+        <div className="shell social-grid">
+          <div className="social-copy">
+            <p className="eyebrow">Медиа Адыгэ Хасэ</p>
+            <h2>Ищите нас в различных социальных сетях</h2>
+            <p>
+              Общее число подписчиков медиа «Адыгэ Хасэ» Краснодарского края — свыше
+              50 000 человек, а ежемесячный охват превышает один миллион. Следите за
+              новостями, проектами и встречами там, где вам удобно.
+            </p>
+            <div className="media-metrics" aria-label="Аудитория медиа Адыгэ Хасэ">
+              <div>
+                <strong>50 000+</strong>
+                <span>подписчиков медиасети</span>
+              </div>
+              <div>
+                <strong>1 млн+</strong>
+                <span>охватов ежемесячно</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="social-list">
+            <a href={CHANNEL_URL} target="_blank" rel="noreferrer">
+              <span className="social-mark social-mark--telegram" aria-hidden="true">T</span>
+              <span className="social-name"><b>Telegram</b><small>@adygkhase</small></span>
+              <strong>{feed.subscribers}<small> подписчиков</small></strong>
+              <i aria-hidden="true">↗</i>
+            </a>
+            <a href={VK_URL} target="_blank" rel="noreferrer">
+              <span className="social-mark social-mark--vk" aria-hidden="true">VK</span>
+              <span className="social-name"><b>ВКонтакте</b><small>vk.ru/adygkhase</small></span>
+              <strong>{vkSubscribers}<small> подписчиков</small></strong>
+              <i aria-hidden="true">↗</i>
+            </a>
+            <a href={MAX_URL} target="_blank" rel="noreferrer">
+              <span className="social-mark social-mark--max" aria-hidden="true">M</span>
+              <span className="social-name"><b>MAX</b><small>Канал организации</small></span>
+              <span className="social-follow">Открыть канал</span>
+              <i aria-hidden="true">↗</i>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="contacts-section" id="contacts">
         <div className="shell contacts-grid">
           <div className="contacts-copy">
@@ -380,7 +456,12 @@ export default async function Home() {
         <div className="shell footer-top">
           <Logo compact />
           <p>Региональный культурно-просветительский центр Краснодарского края</p>
-          <div className="footer-links"><a href={CHANNEL_URL} target="_blank" rel="noreferrer">Telegram</a><a href="#top">Наверх ↑</a></div>
+          <div className="footer-links">
+            <a href={CHANNEL_URL} target="_blank" rel="noreferrer">Telegram</a>
+            <a href={VK_URL} target="_blank" rel="noreferrer">ВКонтакте</a>
+            <a href={MAX_URL} target="_blank" rel="noreferrer">MAX</a>
+            <a href="#top">Наверх ↑</a>
+          </div>
         </div>
         <div className="shell footer-bottom">
           <span>© {new Date().getFullYear()} «Адыгэ Хасэ» Краснодарского края</span>
