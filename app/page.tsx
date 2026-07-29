@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
-const CHANNEL_HANDLE = "adygkhase";
-const CHANNEL_URL = `https://t.me/${CHANNEL_HANDLE}`;
-const CHANNEL_FEED_URL = `https://t.me/s/${CHANNEL_HANDLE}`;
+const TELEGRAM_HANDLE = "adygkhase";
+const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
+const TELEGRAM_FEED_URL = `https://t.me/s/${TELEGRAM_HANDLE}`;
 const VK_URL = "https://vk.ru/adygkhase";
-const VK_WIDGET_URL = "https://vk.com/widget_community.php?gid=214046715&mode=3&width=320";
+const VK_WIDGET_URL = "https://vk.com/widget_community.php?gid=214046715&mode=2&width=640";
 const MAX_URL = "https://max.ru/institute_of_history";
 
 export const dynamic = "force-dynamic";
@@ -25,20 +25,20 @@ const copy = {
     latestNews: "Последние новости",
     learnMore: "Узнать о Хасэ",
     factsLabel: "Кратко об организации",
-    telegramSubscribers: "подписчиков в Telegram",
+    vkSubscribers: "подписчиков ВКонтакте",
     centers: "центра в крае",
     generations: "живая связь поколений",
-    fromTelegram: "из Telegram",
+    fromVk: "из ВКонтакте",
     latestPost: "Последняя публикация",
     views: "просмотров",
     newsFallback: "Новости Адыгэ Хасэ",
-    readTelegram: "Читать в Telegram",
+    readVk: "Читать во ВКонтакте",
     aboutEyebrow: "Об организации",
     aboutTitle: "Дом культуры, знаний и общего дела",
     aboutIntro: "«Адыгэ Хасэ» объединяет людей, которым важно сохранять адыгский язык, историю и традиции — и передавать их дальше в живом, современном формате.",
     organizationDescription: "Общественная организация — региональный культурно-просветительский центр Краснодарского края «Адыгэ Хасэ (Адыгский (Черкесский) Совет)».",
-    sourceLive: "Информация обновлена из официального Telegram-канала",
-    sourcePaused: "Показана сохранённая информация; Telegram временно недоступен",
+    sourceLive: "Публикации обновлены из официального сообщества ВКонтакте",
+    sourcePaused: "Показаны сохранённые публикации; ВКонтакте временно недоступен",
     workEyebrow: "Направления работы",
     workTitle: "Сохранять. Просвещать. Объединять.",
     workLead: "От встреч с носителями традиций до современных образовательных проектов — работа Хасэ охватывает весь край.",
@@ -50,10 +50,10 @@ const copy = {
     ],
     publications: "Публикации",
     newsTitle: "Сейчас в Хасэ",
-    allTelegram: "Все публикации в Telegram",
+    allVk: "Все публикации ВКонтакте",
     read: "Читать",
     readPost: "Читать публикацию",
-    feedStatus: "Лента загружается напрямую из публичного канала и обновляется при каждом посещении сайта.",
+    feedStatus: "Лента загружается из официального сообщества ВКонтакте и обновляется при каждом посещении сайта.",
     mediaEyebrow: "Медиа Адыгэ Хасэ",
     socialTitle: "Ищите нас в различных социальных сетях",
     socialLead: "Общее число подписчиков медиа «Адыгэ Хасэ» Краснодарского края — свыше 50 000 человек, а ежемесячный охват превышает один миллион. Следите за новостями, проектами и встречами там, где вам удобно.",
@@ -67,8 +67,8 @@ const copy = {
     openChannel: "Открыть канал",
     contactEyebrow: "Будем на связи",
     contactTitle: "Приходите в Хасэ",
-    contactLead: "Узнавайте о встречах и новых проектах в Telegram. Двери наших центров открыты для тех, кому близки культура, просвещение и общее дело.",
-    subscribe: "Подписаться на канал",
+    contactLead: "Узнавайте о встречах и новых проектах во ВКонтакте. Двери наших центров открыты для тех, кому близки культура, просвещение и общее дело.",
+    subscribe: "Открыть ВКонтакте",
     armavir: "Армавир",
     armavirAddress: "ул. Софьи Перовской, 28",
     krasnodar: "Краснодар",
@@ -78,7 +78,7 @@ const copy = {
     footerDescription: "Региональный культурно-просветительский центр Краснодарского края",
     top: "Наверх",
     copyright: "«Адыгэ Хасэ» Краснодарского края",
-    footerSource: "Информация и публикации: официальный Telegram-канал",
+    footerSource: "Информация и публикации: официальное сообщество ВКонтакте",
   },
   tr: {
     skip: "İçeriğe geç",
@@ -92,20 +92,20 @@ const copy = {
     latestNews: "Son haberler",
     learnMore: "Hase hakkında",
     factsLabel: "Kurum hakkında kısa bilgi",
-    telegramSubscribers: "Telegram abonesi",
+    vkSubscribers: "VKontakte abonesi",
     centers: "bölgesel merkez",
     generations: "kuşaklar arasında canlı bağ",
-    fromTelegram: "Telegram'dan · Rusça",
+    fromVk: "VKontakte'den · Rusça",
     latestPost: "Son yayın",
     views: "görüntülenme",
     newsFallback: "Adıge Hase haberleri",
-    readTelegram: "Telegram'da oku",
+    readVk: "VKontakte'de oku",
     aboutEyebrow: "Kurum hakkında",
     aboutTitle: "Kültürün, bilginin ve ortak emeğin evi",
     aboutIntro: "Adıge Hase; Adıge dilini, tarihini ve geleneklerini yaşatmak ve onları çağdaş, canlı bir biçimde gelecek kuşaklara aktarmak isteyen insanları bir araya getirir.",
     organizationDescription: "Adıge Hase (Adıge/Çerkes Konseyi), Krasnodar Bölgesi'nde faaliyet gösteren bölgesel bir kültür ve eğitim merkezi ile sivil toplum kuruluşudur.",
-    sourceLive: "Bilgiler resmî Telegram kanalından güncellendi",
-    sourcePaused: "Kayıtlı bilgiler gösteriliyor; Telegram'a geçici olarak ulaşılamıyor",
+    sourceLive: "Yayınlar resmî VKontakte topluluğundan güncellendi",
+    sourcePaused: "Kayıtlı yayınlar gösteriliyor; VKontakte'ye geçici olarak ulaşılamıyor",
     workEyebrow: "Çalışma alanları",
     workTitle: "Korumak. Öğretmek. Birleştirmek.",
     workLead: "Gelenek taşıyıcılarıyla buluşmalardan çağdaş eğitim projelerine kadar Hase'nin çalışmaları tüm bölgeyi kapsar.",
@@ -117,10 +117,10 @@ const copy = {
     ],
     publications: "Yayınlar",
     newsTitle: "Hase'de bugün",
-    allTelegram: "Telegram'daki tüm yayınlar",
+    allVk: "VKontakte'deki tüm yayınlar",
     read: "Oku",
     readPost: "Yayını oku",
-    feedStatus: "Yayınlar resmî Telegram kanalından Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
+    feedStatus: "Yayınlar resmî VKontakte topluluğundan Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
     mediaEyebrow: "Adıge Hase Medyası",
     socialTitle: "Bizi farklı sosyal ağlarda bulun",
     socialLead: "Krasnodar Bölgesi Adıge Hase medya ağının toplam abone sayısı 50.000'i, aylık erişimi ise bir milyonu aşmaktadır. Haberleri, projeleri ve buluşmaları size en uygun platformdan takip edin.",
@@ -134,8 +134,8 @@ const copy = {
     openChannel: "Kanalı aç",
     contactEyebrow: "İletişimde kalalım",
     contactTitle: "Hase'ye bekliyoruz",
-    contactLead: "Buluşmalar ve yeni projeler için Telegram kanalımızı takip edin. Kültüre, eğitime ve ortak çalışmaya değer veren herkese merkezlerimizin kapıları açıktır.",
-    subscribe: "Kanala abone ol",
+    contactLead: "Buluşmalar ve yeni projeler için VKontakte topluluğumuzu takip edin. Kültüre, eğitime ve ortak çalışmaya değer veren herkese merkezlerimizin kapıları açıktır.",
+    subscribe: "VKontakte'yi aç",
     armavir: "Armavir",
     armavirAddress: "Sofya Perovskaya Cd. 28",
     krasnodar: "Krasnodar",
@@ -145,7 +145,7 @@ const copy = {
     footerDescription: "Krasnodar Bölgesi bölgesel kültür ve eğitim merkezi",
     top: "Yukarı",
     copyright: "Krasnodar Bölgesi Adıge Hase",
-    footerSource: "Bilgi ve yayın kaynağı: resmî Telegram kanalı",
+    footerSource: "Bilgi ve yayın kaynağı: resmî VKontakte topluluğu",
   },
 } as const;
 
@@ -179,13 +179,13 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "tr" ? "tr_TR" : "ru_RU",
       url,
-      images: [{ url: `${origin}/og.png`, width: 1717, height: 916, alt: title }],
+      images: [{ url: `${origin}/og-vk.png`, width: 1080, height: 1080, alt: title }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og.png`] },
+    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og-vk.png`] },
   };
 }
 
-type TelegramPost = {
+type VkPost = {
   id: string;
   title: string;
   excerpt: string;
@@ -196,34 +196,30 @@ type TelegramPost = {
   url: string;
 };
 
-type TelegramFeed = {
-  description: string;
+type VkFeed = {
   subscribers: string;
-  posts: TelegramPost[];
+  posts: VkPost[];
   isLive: boolean;
 };
 
-const fallbackDescription =
-  "Общественная организация — региональный культурно-просветительский центр Краснодарского края «Адыгэ Хасэ (Адыгский (Черкесский) Совет)».";
-
-const fallbackPosts: TelegramPost[] = [
+const fallbackPosts: VkPost[] = [
   {
-    id: "3601",
-    title: "Адыги — деятели и участники основания Адыгеи",
+    id: "2878",
+    title: "Поздравляем Кима Схашока с победой на чемпионате России",
     excerpt:
-      "История Шахан-Гирея Хакурате — одного из создателей и первого руководителя Адыгеи.",
-    text: "История Шахан-Гирея Хакурате — одного из создателей и первого руководителя Адыгеи.",
-    date: "2026-07-27T19:53:29+00:00",
-    url: "https://t.me/adygkhase/3601",
+      "Высшая награда и титул трёхкратного чемпиона России по вольной борьбе — заслуженный результат огромной работы и воли к победе.",
+    text: "Высшая награда и титул трёхкратного чемпиона России по вольной борьбе — заслуженный результат огромной работы и воли к победе.",
+    date: "2026-07-28T16:58:00+03:00",
+    url: "https://vk.ru/wall-214046715_2878",
   },
   {
-    id: "3600",
+    id: "2876",
     title: "«Легенды российской анимации» в Армавире",
     excerpt:
       "Масштабная мультимедийная выставка пройдёт с 3 по 9 августа в Городском Дворце культуры.",
     text: "Масштабная мультимедийная выставка пройдёт с 3 по 9 августа в Городском Дворце культуры.",
-    date: "2026-07-27T13:35:41+00:00",
-    url: "https://t.me/adygkhase/3600",
+    date: "2026-07-27T16:41:00+03:00",
+    url: "https://vk.ru/wall-214046715_2876",
   },
 ];
 
@@ -247,6 +243,8 @@ function decodeHtml(value: string) {
 function htmlToText(value: string) {
   return decodeHtml(
     value
+      .replace(/<button\b[^>]*>[\s\S]*?<\/button>/gi, "")
+      .replace(/<img\b[^>]*alt=["']([^"']*)["'][^>]*>/gi, "$1")
       .replace(/<br\s*\/?\s*>/gi, "\n")
       .replace(/<\/(?:blockquote|p)>/gi, "\n")
       .replace(/<[^>]+>/g, ""),
@@ -269,34 +267,72 @@ function makeTitle(text: string) {
   return makeExcerpt(clean || "Публикация Адыгэ Хасэ", 92);
 }
 
-function parseTelegramFeed(html: string): TelegramFeed {
-  const descriptionHtml =
-    html.match(/<div class="tgme_channel_info_description">([\s\S]*?)<\/div>/i)?.[1] ?? "";
-  const description = htmlToText(descriptionHtml) || fallbackDescription;
-  const subscriberMatch = html.match(
-    /<span class="counter_value">([^<]+)<\/span>\s*<span class="counter_type">subscribers<\/span>/i,
-  );
-  const subscribers = subscriberMatch ? htmlToText(subscriberMatch[1]) : "2,1 тыс.";
-  const blocks =
-    html.match(
-      /<div class="tgme_widget_message_wrap[\s\S]*?(?=<div class="tgme_widget_message_wrap|<\/section>)/gi,
-    ) ?? [];
+const vkMonths: Record<string, number> = {
+  января: 1,
+  февраля: 2,
+  марта: 3,
+  апреля: 4,
+  мая: 5,
+  июня: 6,
+  июля: 7,
+  августа: 8,
+  сентября: 9,
+  октября: 10,
+  ноября: 11,
+  декабря: 12,
+};
+
+function parseVkDate(value: string) {
+  const text = htmlToText(value).toLowerCase();
+  const time = text.match(/(\d{1,2}):(\d{2})/);
+  const now = new Date();
+  const todayParts = new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "Europe/Moscow",
+  }).formatToParts(now);
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    todayParts.find((item) => item.type === type)?.value ?? "01";
+  const hour = time?.[1]?.padStart(2, "0") ?? "12";
+  const minute = time?.[2] ?? "00";
+
+  if (text.includes("сегодня") || text.includes("вчера")) {
+    const date = new Date(`${part("year")}-${part("month")}-${part("day")}T${hour}:${minute}:00+03:00`);
+    if (text.includes("вчера")) date.setUTCDate(date.getUTCDate() - 1);
+    return date.toISOString();
+  }
+
+  const fullDate = text.match(/(\d{1,2})\s+([а-яё]+)\s+(\d{4})/i);
+  if (fullDate) {
+    const month = vkMonths[fullDate[2].toLowerCase()];
+    if (month) {
+      return new Date(
+        `${fullDate[3]}-${String(month).padStart(2, "0")}-${fullDate[1].padStart(2, "0")}T${hour}:${minute}:00+03:00`,
+      ).toISOString();
+    }
+  }
+
+  return now.toISOString();
+}
+
+function parseVkFeed(html: string): VkFeed {
+  const membersHtml = html.match(/id="members_count"[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? "";
+  const subscribers = htmlToText(membersHtml).replace(/\D/g, "") || "3858";
+  const blocks = html.match(
+    /<div class="wcommunity_post">[\s\S]*?(?=<div class="wcommunity_post">|<script\b|<\/body>)/gi,
+  ) ?? [];
 
   const posts = blocks
-    .map((block): TelegramPost | null => {
-      const id = block.match(/data-post="adygkhase\/(\d+)"/i)?.[1];
-      const textHtml = block.match(
-        /<div class="tgme_widget_message_text[^>]*>([\s\S]*?)<\/div>/i,
-      )?.[1];
-      const date = block.match(/<time datetime="([^"]+)"/i)?.[1];
-      if (!id || !textHtml || !date) return null;
+    .map((block): VkPost | null => {
+      const id = block.match(/href="\/wall-214046715_(\d+)"/i)?.[1];
+      const dateHtml = block.match(/class="wcommunity_post_date"[^>]*>([\s\S]*?)<\/a>/i)?.[1];
+      const textHtml = block.match(/<div class="wall_post_text"[^>]*>([\s\S]*?)<\/div>/i)?.[1];
+      if (!id || !dateHtml || !textHtml) return null;
 
       const text = htmlToText(textHtml);
       if (!text) return null;
-      const image = block.match(
-        /tgme_widget_message_(?:photo_wrap|video_thumb)[^>]*style="[^"]*background-image:url\(['"]?(https:[^'")]+)["']?\)/i,
-      )?.[1];
-      const views = block.match(/<span class="tgme_widget_message_views">([^<]+)<\/span>/i)?.[1];
+      const image = block.match(/background-image:\s*url\((https:[^)]+)\)/i)?.[1];
 
       return {
         id,
@@ -304,39 +340,41 @@ function parseTelegramFeed(html: string): TelegramFeed {
         excerpt: makeExcerpt(text),
         text,
         image: image ? decodeHtml(image) : undefined,
-        date,
-        views: views ? htmlToText(views) : undefined,
-        url: `${CHANNEL_URL}/${id}`,
+        date: parseVkDate(dateHtml),
+        url: `https://vk.ru/wall-214046715_${id}`,
       };
     })
-    .filter((post): post is TelegramPost => Boolean(post))
+    .filter((post): post is VkPost => Boolean(post))
     .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
     .slice(0, 7);
 
   return {
-    description,
     subscribers,
     posts: posts.length ? posts : fallbackPosts,
     isLive: posts.length > 0,
   };
 }
 
-async function getTelegramFeed(): Promise<TelegramFeed> {
+async function getVkFeed(): Promise<VkFeed> {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 6500);
+  const timeout = setTimeout(() => controller.abort(), 8000);
 
   try {
-    const response = await fetch(CHANNEL_FEED_URL, {
+    const response = await fetch(VK_WIDGET_URL, {
       cache: "no-store",
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; AdygeKhaseSite/1.0)" },
+      headers: {
+        "Accept-Language": "ru-RU,ru;q=0.9",
+        Cookie: "remixlang=0",
+        "User-Agent": "Mozilla/5.0 (compatible; AdygeKhaseSite/1.0)",
+      },
       signal: controller.signal,
     });
-    if (!response.ok) throw new Error("Telegram feed is unavailable");
-    return parseTelegramFeed(await response.text());
+    if (!response.ok) throw new Error("VK feed is unavailable");
+    const html = new TextDecoder("windows-1251").decode(await response.arrayBuffer());
+    return parseVkFeed(html);
   } catch {
     return {
-      description: fallbackDescription,
-      subscribers: "2,1 тыс.",
+      subscribers: "3858",
       posts: fallbackPosts,
       isLive: false,
     };
@@ -345,24 +383,25 @@ async function getTelegramFeed(): Promise<TelegramFeed> {
   }
 }
 
-async function getVkSubscribers(locale: Locale) {
+async function getTelegramSubscribers(locale: Locale) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
 
   try {
-    const response = await fetch(VK_WIDGET_URL, {
+    const response = await fetch(TELEGRAM_FEED_URL, {
       cache: "no-store",
       headers: { "User-Agent": "Mozilla/5.0 (compatible; AdygeKhaseSite/1.0)" },
       signal: controller.signal,
     });
-    if (!response.ok) throw new Error("VK widget is unavailable");
+    if (!response.ok) throw new Error("Telegram counter is unavailable");
     const html = await response.text();
-    const rawCount = html.match(/id="members_count">\s*([\d,.\s]+)/i)?.[1] ?? "";
-    const digits = rawCount.replace(/\D/g, "");
-    if (!digits) throw new Error("VK subscriber count is unavailable");
-    return new Intl.NumberFormat(locale === "tr" ? "tr-TR" : "ru-RU").format(Number(digits));
+    const rawCount = html.match(
+      /<span class="counter_value">([^<]+)<\/span>\s*<span class="counter_type">subscribers<\/span>/i,
+    )?.[1];
+    if (!rawCount) throw new Error("Telegram subscriber count is unavailable");
+    return htmlToText(rawCount).replace(/тыс\.?/gi, locale === "tr" ? "bin" : "тыс.");
   } catch {
-    return locale === "tr" ? "3,8 bin+" : "3,8 тыс.+";
+    return locale === "tr" ? "2,1 bin+" : "2,1 тыс.+";
   } finally {
     clearTimeout(timeout);
   }
@@ -396,12 +435,13 @@ export default async function Home({
   const params = await searchParams;
   const locale: Locale = params.lang === "tr" ? "tr" : "ru";
   const t = copy[locale];
-  const [feed, vkSubscribers] = await Promise.all([
-    getTelegramFeed(),
-    getVkSubscribers(locale),
+  const [feed, telegramSubscribers] = await Promise.all([
+    getVkFeed(),
+    getTelegramSubscribers(locale),
   ]);
-  const telegramSubscribers =
-    locale === "tr" ? feed.subscribers.replace(/тыс\.?/gi, "bin") : feed.subscribers;
+  const vkSubscribers = new Intl.NumberFormat(locale === "tr" ? "tr-TR" : "ru-RU").format(
+    Number(feed.subscribers),
+  );
   const [featured, ...recentPosts] = feed.posts;
 
   return (
@@ -423,8 +463,8 @@ export default async function Home({
               <a className={locale === "ru" ? "is-active" : ""} href="/#top" lang="ru">RU</a>
               <a className={locale === "tr" ? "is-active" : ""} href="/?lang=tr#top" lang="tr">TR</a>
             </div>
-            <a className="header-cta" href={CHANNEL_URL} target="_blank" rel="noreferrer">
-              Telegram <span aria-hidden="true">↗</span>
+            <a className="header-cta" href={VK_URL} target="_blank" rel="noreferrer">
+              {t.vk} <span aria-hidden="true">↗</span>
             </a>
           </div>
           <details className="mobile-menu">
@@ -452,7 +492,7 @@ export default async function Home({
               <a className="text-link text-link--light" href="#about">{t.learnMore} <span aria-hidden="true">↓</span></a>
             </div>
             <div className="hero-facts" aria-label={t.factsLabel}>
-              <div><strong>{telegramSubscribers}</strong><span>{t.telegramSubscribers}</span></div>
+              <div><strong>{vkSubscribers}</strong><span>{t.vkSubscribers}</span></div>
               <div><strong>2</strong><span>{t.centers}</span></div>
               <div><strong>∞</strong><span>{t.generations}</span></div>
             </div>
@@ -468,7 +508,7 @@ export default async function Home({
                   <strong>{locale === "tr" ? "Hase" : "Хасэ"}</strong>
                 </div>
               )}
-              <span className="live-badge"><i aria-hidden="true" /> {t.fromTelegram}</span>
+              <span className="live-badge"><i aria-hidden="true" /> {t.fromVk}</span>
             </div>
             <div className="featured-body">
               <p className="post-meta">
@@ -477,7 +517,7 @@ export default async function Home({
               </p>
               <h2>{featured?.title ?? t.newsFallback}</h2>
               <p>{featured?.excerpt}</p>
-              <a href={featured?.url ?? CHANNEL_URL} target="_blank" rel="noreferrer">{t.readTelegram} <span aria-hidden="true">↗</span></a>
+              <a href={featured?.url ?? VK_URL} target="_blank" rel="noreferrer">{t.readVk} <span aria-hidden="true">↗</span></a>
             </div>
           </article>
         </div>
@@ -491,7 +531,7 @@ export default async function Home({
           </div>
           <div className="about-copy">
             <p className="about-intro">{t.aboutIntro}</p>
-            <p>{locale === "tr" ? t.organizationDescription : feed.description}</p>
+            <p>{t.organizationDescription}</p>
             <div className="source-note">
               <span className={feed.isLive ? "source-dot" : "source-dot source-dot--paused"} />
               {feed.isLive ? t.sourceLive : t.sourcePaused}
@@ -539,7 +579,7 @@ export default async function Home({
         <div className="shell">
           <div className="section-topline section-topline--news">
             <div><p className="eyebrow eyebrow--dark">{t.publications}</p><h2>{t.newsTitle}</h2></div>
-            <a className="text-link" href={CHANNEL_URL} target="_blank" rel="noreferrer">{t.allTelegram} <span aria-hidden="true">↗</span></a>
+            <a className="text-link" href={VK_URL} target="_blank" rel="noreferrer">{t.allVk} <span aria-hidden="true">↗</span></a>
           </div>
 
           <div className="news-grid">
@@ -586,7 +626,7 @@ export default async function Home({
           </div>
 
           <div className="social-list">
-            <a href={CHANNEL_URL} target="_blank" rel="noreferrer">
+            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer">
               <span className="social-mark social-mark--telegram" aria-hidden="true">T</span>
               <span className="social-name"><b>Telegram</b><small>@adygkhase</small></span>
               <strong>{telegramSubscribers}<small> {t.subscriber}</small></strong>
@@ -614,7 +654,7 @@ export default async function Home({
             <p className="eyebrow">{t.contactEyebrow}</p>
             <h2>{t.contactTitle}</h2>
             <p>{t.contactLead}</p>
-            <a className="button button--gold" href={CHANNEL_URL} target="_blank" rel="noreferrer">{t.subscribe} <span aria-hidden="true">↗</span></a>
+            <a className="button button--gold" href={VK_URL} target="_blank" rel="noreferrer">{t.subscribe} <span aria-hidden="true">↗</span></a>
           </div>
           <div className="address-list">
             <article>
@@ -638,7 +678,6 @@ export default async function Home({
           <Logo compact locale={locale} />
           <p>{t.footerDescription}</p>
           <div className="footer-links">
-            <a href={CHANNEL_URL} target="_blank" rel="noreferrer">Telegram</a>
             <a href={VK_URL} target="_blank" rel="noreferrer">{t.vk}</a>
             <a href={MAX_URL} target="_blank" rel="noreferrer">MAX</a>
             <a href="#top">{t.top} ↑</a>
