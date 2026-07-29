@@ -1,45 +1,34 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, SOCIAL_IMAGE_URL } from "../lib/site";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "localhost:3000";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") ??
-    (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
-  const title = "Адыгэ Хасэ Краснодарского края";
-  const description =
-    "Региональный культурно-просветительский центр: новости, проекты, события и контакты Адыгэ Хасэ Краснодарского края.";
-
   return {
-    title,
-    description,
-    alternates: { canonical: origin },
+    metadataBase: new URL(SITE_URL),
+    title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
+    description: SITE_DESCRIPTION,
+    alternates: { canonical: SITE_URL },
+    icons: { icon: "/favicon.svg" },
     openGraph: {
-      title,
-      description,
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
       type: "website",
       locale: "ru_RU",
-      url: origin,
+      url: SITE_URL,
       images: [
         {
-          url: `${origin}/og-green.png`,
+          url: SOCIAL_IMAGE_URL,
           width: 1254,
           height: 1254,
-          alt: title,
+          alt: SITE_NAME,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: [`${origin}/og-green.png`],
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      images: [SOCIAL_IMAGE_URL],
     },
   };
 }
