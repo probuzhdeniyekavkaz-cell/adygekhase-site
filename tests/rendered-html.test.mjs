@@ -22,7 +22,8 @@ test("renders VK as the publication source in both languages", async () => {
   for (const html of [ru, tr]) {
     assert.match(html, /https:\/\/vk\.ru\/wall-214046715_\d+/);
     assert.match(html, /https:\/\/vk\.ru\/adygkhase/);
-    assert.match(html, /og-vk\.png/);
+    assert.match(html, /og-green\.png/);
+    assert.match(html, /adyge-khase-logo-fixed\.png/);
     assert.doesNotMatch(outsideMediaSection(html), /Telegram|Телеграм|t\.me/i);
   }
 
