@@ -31,9 +31,18 @@ async function waitForServer(url) {
   throw new Error("The local render server did not start");
 }
 
-function makeStatic(html, locale) {
+function makeStatic(html, locale = "ru") {
   const isTurkish = locale === "tr";
-  let result = html
+  const structuredData = [];
+  const preserved = html.replace(
+    /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
+    (script) => {
+      const token = `<!--JSONLD-${structuredData.length}-->`;
+      structuredData.push(script);
+      return token;
+    },
+  );
+  let result = preserved
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<link\b[^>]*rel=["'](?:modulepreload|preload)["'][^>]*as=["']script["'][^>]*>/gi, "")
     .replaceAll('href="/?lang=tr#top"', 'href="/tr/#top"')
@@ -50,6 +59,23 @@ function makeStatic(html, locale) {
       "Yayınlar resmî VKontakte topluluğundan Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
       "Yayınlar resmî VKontakte topluluğundan Rusça olarak alınır ve günde birkaç kez otomatik güncellenir.",
     );
+
+  structuredData.forEach((script, index) => {
+    result = result.replace(`<!--JSONLD-${index}-->`, script);
+  });
+
+  const headEnd = result.indexOf("</head>");
+  if (headEnd >= 0) {
+    const head = result.slice(0, headEnd);
+    let body = result.slice(headEnd);
+    const lateMetadata = [
+      ...(body.match(/<title>[\s\S]*?<\/title>/gi) ?? []),
+      ...(body.match(/<meta\b[^>]*>/gi) ?? []),
+      ...(body.match(/<link\b[^>]*rel=["'](?:canonical|icon)["'][^>]*>/gi) ?? []),
+    ];
+    for (const tag of lateMetadata) body = body.replace(tag, "");
+    result = `${head}${lateMetadata.join("")}${body}`;
+  }
 
   if (isTurkish) {
     result = result.replace('<html lang="ru">', '<html lang="tr">');
@@ -87,6 +113,8 @@ async function cacheRemoteImages(htmlByLocale) {
   return Object.fromEntries(Object.entries(htmlByLocale).map(([locale, html]) => {
     let cached = html;
     for (const [remote, local] of replacements) cached = cached.replaceAll(remote, local);
+    cached = cached.replaceAll('content="/media/', 'content="https://adygekhase.ru/media/');
+    cached = cached.replaceAll('"image":["/media/', '"image":["https://adygekhase.ru/media/');
     return [locale, cached];
   }));
 }
@@ -108,24 +136,46 @@ try {
   const origin = `http://127.0.0.1:${port}`;
   await waitForServer(origin);
   const requestHeaders = { Host: "adygekhase.ru", "X-Forwarded-Proto": "https" };
-  const [ruResponse, trResponse] = await Promise.all([
-    fetch(`${origin}/`, { headers: requestHeaders }),
-    fetch(`${origin}/?lang=tr`, { headers: requestHeaders }),
-  ]);
-  if (!ruResponse.ok || !trResponse.ok) throw new Error("Page rendering failed");
+  const initialTargets = [
+    { key: "", requestPath: "/", locale: "ru" },
+    { key: "tr", requestPath: "/?lang=tr", locale: "tr" },
+    { key: "about", requestPath: "/about/", locale: "ru" },
+    { key: "projects", requestPath: "/projects/", locale: "ru" },
+    { key: "news", requestPath: "/news/", locale: "ru" },
+    { key: "contacts", requestPath: "/contacts/", locale: "ru" },
+  ];
+  const initialResponses = await Promise.all(
+    initialTargets.map((target) => fetch(`${origin}${target.requestPath}`, { headers: requestHeaders })),
+  );
+  if (initialResponses.some((response) => !response.ok)) throw new Error("Page rendering failed");
+  const initialHtml = await Promise.all(initialResponses.map((response) => response.text()));
+  const newsHtml = initialHtml[initialTargets.findIndex((target) => target.key === "news")];
+  const postIds = [...new Set([...newsHtml.matchAll(/href=["']\/news\/(\d+)\//g)].map((match) => match[1]))];
+  const articleTargets = postIds.map((id) => ({ key: `news/${id}`, requestPath: `/news/${id}/`, locale: "ru" }));
+  const articleResponses = await Promise.all(
+    articleTargets.map((target) => fetch(`${origin}${target.requestPath}`, { headers: requestHeaders })),
+  );
+  if (articleResponses.some((response) => !response.ok)) throw new Error("Article rendering failed");
+  const articleHtml = await Promise.all(articleResponses.map((response) => response.text()));
+  const allTargets = [...initialTargets, ...articleTargets];
+  const renderedPages = Object.fromEntries(
+    allTargets.map((target, index) => [
+      target.key || "home",
+      makeStatic(index < initialHtml.length ? initialHtml[index] : articleHtml[index - initialHtml.length], target.locale),
+    ]),
+  );
 
-  const [ruHtml, trHtml] = await Promise.all([ruResponse.text(), trResponse.text()]);
-  await mkdir(path.join(output, "tr"), { recursive: true });
   await cp(path.join(root, "public"), output, { recursive: true });
   await mkdir(path.join(output, "_next"), { recursive: true });
   await cp(path.join(root, ".next", "static"), path.join(output, "_next", "static"), { recursive: true });
-  const staticHtml = await cacheRemoteImages({
-    ru: makeStatic(ruHtml, "ru"),
-    tr: makeStatic(trHtml, "tr"),
-  });
-  await writeFile(path.join(output, "index.html"), staticHtml.ru);
-  await writeFile(path.join(output, "tr", "index.html"), staticHtml.tr);
-  await writeFile(path.join(output, "404.html"), staticHtml.ru);
+  const staticHtml = await cacheRemoteImages(renderedPages);
+  for (const target of allTargets) {
+    const key = target.key || "home";
+    const targetDir = target.key ? path.join(output, target.key) : output;
+    await mkdir(targetDir, { recursive: true });
+    await writeFile(path.join(targetDir, "index.html"), staticHtml[key]);
+  }
+  await writeFile(path.join(output, "404.html"), staticHtml.home);
   await writeFile(path.join(output, "CNAME"), "adygekhase.ru\n");
   await writeFile(path.join(output, ".nojekyll"), "");
   await writeFile(
@@ -134,7 +184,12 @@ try {
   );
   await writeFile(
     path.join(output, "sitemap.xml"),
-    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://adygekhase.ru/</loc></url><url><loc>https://adygekhase.ru/tr/</loc></url></urlset>\n',
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${allTargets.map((target) => {
+      const route = target.key ? `/${target.key}/` : "/";
+      const priority = target.key === "" ? "1.0" : target.key === "news" ? "0.9" : target.key.startsWith("news/") ? "0.7" : "0.8";
+      const changefreq = target.key === "" || target.key === "news" ? "daily" : "monthly";
+      return `<url><loc>https://adygekhase.ru${route}</loc><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+    }).join("")}</urlset>\n`,
   );
 
   const builtRu = await readFile(path.join(output, "index.html"), "utf8");
