@@ -179,9 +179,9 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "tr" ? "tr_TR" : "ru_RU",
       url,
-      images: [{ url: `${origin}/og-vk.png`, width: 1080, height: 1080, alt: title }],
+      images: [{ url: `${origin}/og-green.png`, width: 1254, height: 1254, alt: title }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og-vk.png`] },
+    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og-green.png`] },
   };
 }
 
@@ -420,7 +420,7 @@ function Logo({ compact = false, locale = "ru" }: { compact?: boolean; locale?: 
   return (
     <span className={compact ? "logo-lockup logo-lockup--compact" : "logo-lockup"}>
       <img
-        src="/adyge-khase-logo.png"
+        src="/adyge-khase-logo-fixed.png"
         alt={locale === "tr" ? "Krasnodar Bölgesi Adıge Hase" : "Адыгэ Хасэ Краснодарского края"}
       />
     </span>

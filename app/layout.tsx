@@ -28,9 +28,9 @@ export async function generateMetadata(): Promise<Metadata> {
       url: origin,
       images: [
         {
-          url: `${origin}/og-vk.png`,
-          width: 1080,
-          height: 1080,
+          url: `${origin}/og-green.png`,
+          width: 1254,
+          height: 1254,
           alt: title,
         },
       ],
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: [`${origin}/og-vk.png`],
+      images: [`${origin}/og-green.png`],
     },
   };
 }
