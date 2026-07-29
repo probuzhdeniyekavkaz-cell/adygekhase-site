@@ -43,12 +43,12 @@ function makeStatic(html, locale) {
     .replaceAll("http://adygekhase.ru", "https://adygekhase.ru")
     .replaceAll("http://127.0.0.1:3199", "https://adygekhase.ru")
     .replaceAll(
-      "Лента загружается напрямую из публичного канала и обновляется при каждом посещении сайта.",
-      "Лента автоматически обновляется из официального Telegram-канала несколько раз в день.",
+      "Лента загружается из официального сообщества ВКонтакте и обновляется при каждом посещении сайта.",
+      "Лента автоматически обновляется из официального сообщества ВКонтакте несколько раз в день.",
     )
     .replaceAll(
-      "Yayınlar resmî Telegram kanalından Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
-      "Yayınlar resmî Telegram kanalından Rusça olarak alınır ve günde birkaç kez otomatik güncellenir.",
+      "Yayınlar resmî VKontakte topluluğundan Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
+      "Yayınlar resmî VKontakte topluluğundan Rusça olarak alınır ve günde birkaç kez otomatik güncellenir.",
     );
 
   if (isTurkish) {
@@ -58,10 +58,10 @@ function makeStatic(html, locale) {
   return `<!doctype html>\n${result.replace(/^<!doctype html>/i, "").trim()}\n`;
 }
 
-async function cacheTelegramImages(htmlByLocale) {
+async function cacheRemoteImages(htmlByLocale) {
   const matches = [...new Set(
     Object.values(htmlByLocale).flatMap((html) =>
-      html.match(/https:\/\/cdn\d*\.telesco\.pe\/file\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9]+)?/g) ?? [],
+      html.match(/https:\/\/[^"'()\s<>]+(?:userapi\.com|okcdn\.ru)\/[^"'()\s<>]+/g) ?? [],
     ),
   )];
   if (!matches.length) return htmlByLocale;
@@ -72,7 +72,7 @@ async function cacheTelegramImages(htmlByLocale) {
 
   await Promise.all(matches.map(async (url) => {
     try {
-      const response = await fetch(url, {
+      const response = await fetch(url.replaceAll("&amp;", "&"), {
         headers: { "User-Agent": "Mozilla/5.0 (compatible; AdygeKhaseSite/1.0)" },
       });
       if (!response.ok) return;
@@ -119,7 +119,7 @@ try {
   await cp(path.join(root, "public"), output, { recursive: true });
   await mkdir(path.join(output, "_next"), { recursive: true });
   await cp(path.join(root, ".next", "static"), path.join(output, "_next", "static"), { recursive: true });
-  const staticHtml = await cacheTelegramImages({
+  const staticHtml = await cacheRemoteImages({
     ru: makeStatic(ruHtml, "ru"),
     tr: makeStatic(trHtml, "tr"),
   });
