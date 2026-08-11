@@ -7,6 +7,7 @@ export const SOCIAL_IMAGE_URL = `${SITE_URL}/og-green.png`;
 
 export const TELEGRAM_URL = "https://t.me/adygkhase";
 export const VK_URL = "https://vk.ru/adygkhase";
+export const VK_VIDEO_URL = "https://vkvideo.ru/@adygkhase";
 export const MAX_URL = "https://max.ru/institute_of_history";
 
 export const organizationJsonLd = {
@@ -23,7 +24,7 @@ export const organizationJsonLd = {
     "@type": "AdministrativeArea",
     name: "Краснодарский край",
   },
-  sameAs: [VK_URL, MAX_URL],
+  sameAs: [VK_URL, VK_VIDEO_URL, MAX_URL],
   location: [
     {
       "@type": "Place",
