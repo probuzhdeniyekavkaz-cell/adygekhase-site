@@ -30,7 +30,7 @@ const copy = {
     latestNews: "Последние новости",
     learnMore: "Узнать о Хасэ",
     factsLabel: "Кратко об организации",
-    vkSubscribers: "подписчиков ВКонтакте",
+    monthlySocialReach: "охватов в социальных сетях ежемесячно",
     centers: "центра в крае",
     generations: "живая связь поколений",
     fromVk: "из ВКонтакте",
@@ -97,7 +97,7 @@ const copy = {
     latestNews: "Son haberler",
     learnMore: "Hase hakkında",
     factsLabel: "Kurum hakkında kısa bilgi",
-    vkSubscribers: "VKontakte abonesi",
+    monthlySocialReach: "sosyal ağlarda aylık erişim",
     centers: "bölgesel merkez",
     generations: "kuşaklar arasında canlı bağ",
     fromVk: "VKontakte'den · Rusça",
@@ -305,7 +305,7 @@ export default async function Home({
               <a className="text-link text-link--light" href="#about">{t.learnMore} <span aria-hidden="true">↓</span></a>
             </div>
             <div className="hero-facts" aria-label={t.factsLabel}>
-              <div><strong>{vkSubscribers}</strong><span>{t.vkSubscribers}</span></div>
+              <div><strong>{t.reachValue}</strong><span>{t.monthlySocialReach}</span></div>
               <div><strong>2</strong><span>{t.centers}</span></div>
               <div><strong>∞</strong><span>{t.generations}</span></div>
             </div>
