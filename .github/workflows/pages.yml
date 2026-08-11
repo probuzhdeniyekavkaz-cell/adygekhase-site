@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "17 */3 * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -29,6 +29,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Обновить видео из VK Видео
+        run: node scripts/refresh-vk-video-cache.mjs
       - run: npm run build:pages
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -42,10 +44,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          date -u +"Последнее плановое обновление: %Y-%m" > .github/last-refresh
-          if [ -z "$(git status --short -- .github/last-refresh)" ]; then
+          date -u +"Последнее плановое обновление: %Y-%m-%d-%H" > .github/last-refresh
+          git add .github/last-refresh data/vk-videos.json
+          if git diff --cached --quiet; then
             exit 0
           fi
-          git add .github/last-refresh
-          git commit -m "chore: keep scheduled updates active [skip ci]"
+          git commit -m "chore: refresh VK Video feed [skip ci]"
           git push
