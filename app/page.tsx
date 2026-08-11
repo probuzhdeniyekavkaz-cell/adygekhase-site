@@ -4,11 +4,13 @@ import {
   MAX_URL,
   SITE_URL,
   TELEGRAM_URL,
+  VK_VIDEO_URL,
   VK_URL,
   organizationJsonLd,
   websiteJsonLd,
 } from "../lib/site";
 import { getVkFeed, htmlToText } from "../lib/vk-feed";
+import { getVkVideos } from "../lib/vk-video";
 
 const TELEGRAM_HANDLE = "adygkhase";
 const TELEGRAM_FEED_URL = `https://t.me/s/${TELEGRAM_HANDLE}`;
@@ -21,7 +23,7 @@ const copy = {
   ru: {
     skip: "Перейти к содержанию",
     homeLabel: "Адыгэ Хасэ — на главную",
-    nav: ["Об организации", "Направления", "Публикации", "Соцсети", "Контакты"],
+    nav: ["Об организации", "Направления", "Публикации", "Видео", "Соцсети", "Контакты"],
     menu: "Меню",
     region: "Краснодарский край",
     heroTitle: "Культура, которая",
@@ -59,6 +61,13 @@ const copy = {
     read: "Читать",
     readPost: "Читать публикацию",
     feedStatus: "Лента загружается из официального сообщества ВКонтакте и обновляется при каждом посещении сайта.",
+    videoEyebrow: "VK Видео",
+    videoTitle: "Смотрите Адыгэ Хасэ",
+    videoLead: "Интервью, лекции, встречи и видеорассказы о культуре, истории и людях адыгского мира.",
+    allVideos: "Все видео канала",
+    watchVideo: "Смотреть видео",
+    videoSourceLive: "Новые ролики автоматически появляются здесь из официального канала VK Видео.",
+    videoSourcePaused: "Показана сохранённая подборка канала; автоматическое обновление продолжится после восстановления связи с VK Видео.",
     mediaEyebrow: "Медиа Адыгэ Хасэ",
     socialTitle: "Ищите нас в различных социальных сетях",
     socialLead: "Общее число подписчиков медиа «Адыгэ Хасэ» Краснодарского края — свыше 50 000 человек, а ежемесячный охват превышает один миллион. Следите за новостями, проектами и встречами там, где вам удобно.",
@@ -88,7 +97,7 @@ const copy = {
   tr: {
     skip: "İçeriğe geç",
     homeLabel: "Adıge Hase — ana sayfa",
-    nav: ["Kurum hakkında", "Çalışma alanları", "Yayınlar", "Sosyal medya", "İletişim"],
+    nav: ["Kurum hakkında", "Çalışma alanları", "Yayınlar", "Videolar", "Sosyal medya", "İletişim"],
     menu: "Menü",
     region: "Krasnodar Bölgesi",
     heroTitle: "Kuşakları birleştiren",
@@ -126,6 +135,13 @@ const copy = {
     read: "Oku",
     readPost: "Yayını oku",
     feedStatus: "Yayınlar resmî VKontakte topluluğundan Rusça olarak alınır ve site her ziyaret edildiğinde güncellenir.",
+    videoEyebrow: "VK Video",
+    videoTitle: "Adıge Hase'yi izleyin",
+    videoLead: "Adıge dünyasının kültürü, tarihi ve insanları hakkında röportajlar, konferanslar, buluşmalar ve video anlatıları.",
+    allVideos: "Kanaldaki tüm videolar",
+    watchVideo: "Videoyu izle",
+    videoSourceLive: "Yeni videolar resmî VK Video kanalından otomatik olarak burada yayınlanır.",
+    videoSourcePaused: "Kanalın kayıtlı seçkisi gösteriliyor; VK Video bağlantısı yeniden kurulduğunda otomatik güncelleme sürecek.",
     mediaEyebrow: "Adıge Hase Medyası",
     socialTitle: "Bizi farklı sosyal ağlarda bulun",
     socialLead: "Krasnodar Bölgesi Adıge Hase medya ağının toplam abone sayısı 50.000'i, aylık erişimi ise bir milyonu aşmaktadır. Haberleri, projeleri ve buluşmaları size en uygun platformdan takip edin.",
@@ -242,8 +258,9 @@ export default async function Home({
   const params = await searchParams;
   const locale: Locale = params.lang === "tr" ? "tr" : "ru";
   const t = copy[locale];
-  const [feed, telegramSubscribers] = await Promise.all([
+  const [feed, videoFeed, telegramSubscribers] = await Promise.all([
     getVkFeed(),
+    getVkVideos(),
     getTelegramSubscribers(locale),
   ]);
   const vkSubscribers = new Intl.NumberFormat(locale === "tr" ? "tr-TR" : "ru-RU").format(
@@ -268,8 +285,9 @@ export default async function Home({
             <a href="#about">{t.nav[0]}</a>
             <a href="#work">{t.nav[1]}</a>
             <a href="#news">{t.nav[2]}</a>
-            <a href="#social">{t.nav[3]}</a>
-            <a href="#contacts">{t.nav[4]}</a>
+            <a href="#videos">{t.nav[3]}</a>
+            <a href="#social">{t.nav[4]}</a>
+            <a href="#contacts">{t.nav[5]}</a>
           </nav>
           <div className="header-actions">
             <div className="language-switch" aria-label="Language / Язык">
@@ -286,8 +304,9 @@ export default async function Home({
               <a href="#about">{t.nav[0]}</a>
               <a href="#work">{t.nav[1]}</a>
               <a href="#news">{t.nav[2]}</a>
-              <a href="#social">{t.nav[3]}</a>
-              <a href="#contacts">{t.nav[4]}</a>
+              <a href="#videos">{t.nav[3]}</a>
+              <a href="#social">{t.nav[4]}</a>
+              <a href="#contacts">{t.nav[5]}</a>
             </nav>
           </details>
         </div>
@@ -420,6 +439,49 @@ export default async function Home({
         </div>
       </section>
 
+      <section className="video-section" id="videos">
+        <div className="shell">
+          <div className="section-topline section-topline--video">
+            <div>
+              <p className="eyebrow">{t.videoEyebrow}</p>
+              <h2>{t.videoTitle}</h2>
+            </div>
+            <div className="video-intro">
+              <p>{t.videoLead}</p>
+              <a className="text-link text-link--light" href={VK_VIDEO_URL} target="_blank" rel="noreferrer">
+                {t.allVideos} <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="video-grid">
+            {videoFeed.videos.slice(0, 6).map((video, index) => (
+              <article className={`video-card ${index === 0 ? "video-card--wide" : ""}`} key={video.id}>
+                <a href={video.url} target="_blank" rel="noreferrer" aria-label={`${t.watchVideo}: ${video.title}`}>
+                  <span className="video-media">
+                    <img src={video.thumbnail} alt="" loading="lazy" referrerPolicy="no-referrer" />
+                    <span className="video-play" aria-hidden="true">▶</span>
+                    {video.duration ? <span className="video-duration">{video.duration}</span> : null}
+                  </span>
+                  <span className="video-body">
+                    <strong>{video.title}</strong>
+                    <span className="video-meta">
+                      <span>{t.watchVideo}</span>
+                      {video.views ? <span>{video.views} {t.views}</span> : null}
+                    </span>
+                  </span>
+                </a>
+              </article>
+            ))}
+          </div>
+
+          <p className="video-feed-status">
+            <span className={videoFeed.isLive ? "source-dot" : "source-dot source-dot--paused"} aria-hidden="true" />
+            {videoFeed.isLive ? t.videoSourceLive : t.videoSourcePaused}
+          </p>
+        </div>
+      </section>
+
       <section className="social-section" id="social">
         <div className="shell social-grid">
           <div className="social-copy">
@@ -493,8 +555,10 @@ export default async function Home({
           <div className="footer-links">
             <a href="/about/">{locale === "tr" ? "Kurum" : "Об организации"}</a>
             <a href="/news/">{locale === "tr" ? "Haberler" : "Новости"}</a>
+            <a href="#videos">{t.nav[3]}</a>
             <a href="/contacts/">{locale === "tr" ? "İletişim" : "Контакты"}</a>
             <a href={VK_URL} target="_blank" rel="noreferrer">{t.vk}</a>
+            <a href={VK_VIDEO_URL} target="_blank" rel="noreferrer">VK Видео</a>
             <a href={MAX_URL} target="_blank" rel="noreferrer">MAX</a>
             <a href="#top">{t.top} ↑</a>
           </div>
